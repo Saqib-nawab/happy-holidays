@@ -4,7 +4,7 @@ import { HotelFormData } from "./ManageHotelForm";
 const DetailsSection = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors }, //destruturing errors from the form
   } = useFormContext<HotelFormData>();
 
   return (
