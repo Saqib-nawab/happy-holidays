@@ -9,6 +9,7 @@ import { v2 as cloudinary } from "cloudinary";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import myHotelRoutes from "./routes/my-hotels";
+import hotelRoutes from "./routes/hotels";
 
 import cookieParser from "cookie-parser";
 
@@ -37,7 +38,8 @@ app.use(cors(corsOptions));
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/my-hotels", myHotelRoutes);
+app.use("/api/my-hotels", myHotelRoutes); //for the current logged in user to manage their own hotels
+app.use("/api/hotels", hotelRoutes); //endpoint for searching hotels
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
