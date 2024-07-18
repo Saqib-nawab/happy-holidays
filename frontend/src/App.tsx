@@ -6,12 +6,12 @@ import {
   Routes,
   // Navigate,
 } from "react-router-dom";
-import AddHotel from "./pages/AddHotel";
 
 
 //pages
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
+import AddHotel from "./pages/AddHotel";
 
 function App() {
    const { isLoggedIn } = useAppContext();
@@ -56,8 +56,6 @@ function App() {
 
          {isLoggedIn && (
           <>
-           
-
             <Route
               path="/add-hotel"
               element={

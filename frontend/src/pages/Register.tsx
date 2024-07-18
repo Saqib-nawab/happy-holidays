@@ -13,7 +13,7 @@ export type RegisterFormData = { //means the form is going to take data of this 
 };
 
 const Register = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { showToast } = useAppContext();
 
