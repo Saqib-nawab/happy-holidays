@@ -66,6 +66,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.get(
+  //getting a certain hotel for booking purpose
   "/:id",
   [param("id").notEmpty().withMessage("Hotel ID is required")],
   async (req: Request, res: Response) => {
