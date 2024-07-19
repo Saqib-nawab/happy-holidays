@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-
-//the userType will help us to validate if the input aligns with the user schema defined
-export type UserType = {
-  _id: string;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-};
+import { UserType } from "../shared/types";
 
 const userSchema = new mongoose.Schema({
   //id is omitted for it is generated automatically

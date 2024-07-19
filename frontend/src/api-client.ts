@@ -1,5 +1,6 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
+import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
   HotelSearchResponse,
   HotelType,
@@ -8,6 +9,16 @@ import {
 } from "../../backend/src/shared/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ""; //when both frontend and backend are bundeled together for deployment then the same api is used for all the requests
+
+export const fetchCurrentUser = async (): Promise<UserType> => {
+  const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Error fetching user");
+  }
+  return response.json();
+};
 
 //takes the form data from the register page and sends  POST request
 export const register = async (formData: RegisterFormData) => {
