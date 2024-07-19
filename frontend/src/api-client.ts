@@ -133,6 +133,7 @@ export type SearchParams = {
   sortOption?: string;
 };
 
+//searching hotels with respect to search parameters input
 export const searchHotels = async (
   searchParams: SearchParams
 ): Promise<HotelSearchResponse> => {
