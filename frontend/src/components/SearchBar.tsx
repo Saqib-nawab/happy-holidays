@@ -16,8 +16,8 @@ const SearchBar = () => {
   const [childCount, setChildCount] = useState<number>(search.childCount);
 
   const handleSubmit = (event: FormEvent) => {
-    event.preventDefault(); //stop searching on every keystroke
-    search.saveSearchValues( //getting the forn values from the local states and sending it to global state
+    event.preventDefault();
+    search.saveSearchValues(
       destination,
       checkIn,
       checkOut,

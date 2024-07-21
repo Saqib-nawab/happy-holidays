@@ -9,7 +9,7 @@ import { useSearchContext } from "../../contexts/SearchContext";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import * as apiClient from "../../api-client";
-import { useAppContext } from "../../contexts/AppContexts";
+import { useAppContext } from "../../contexts/AppContext";
 
 type Props = {
   currentUser: UserType;
@@ -30,6 +30,7 @@ export type BookingFormData = {
 };
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
+  console.log(currentUser);
   const stripe = useStripe();
   const elements = useElements();
 

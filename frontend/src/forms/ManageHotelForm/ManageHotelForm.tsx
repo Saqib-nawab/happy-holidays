@@ -1,14 +1,12 @@
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsSection from "./DetailsSection";
-import TypeSection from "./TypesSection";
+import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
 import { HotelType } from "../../../../backend/src/shared/types";
 import { useEffect } from "react";
 
-
-//type for form hotel adding form data
 export type HotelFormData = {
   name: string;
   city: string;

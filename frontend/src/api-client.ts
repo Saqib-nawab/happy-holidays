@@ -1,14 +1,13 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import { BookingFormData } from "./forms/BookingForm/BookingForm";
 import {
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
   UserType,
 } from "../../backend/src/shared/types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ""; //when both frontend and backend are bundeled together for deployment then the same api is used for all the requests
+import { BookingFormData } from "./forms/BookingForm/BookingForm";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export const fetchCurrentUser = async (): Promise<UserType> => {
   const response = await fetch(`${API_BASE_URL}/api/users/me`, {
@@ -20,11 +19,10 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
   return response.json();
 };
 
-//takes the form data from the register page and sends  POST request
 export const register = async (formData: RegisterFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
-    credentials: "include", //setting the cookies in the browser in order to maitain whether user is logged in or not
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -55,20 +53,18 @@ export const signIn = async (formData: SignInFormData) => {
   return body;
 };
 
-//if this token is validated then the user is logged in
 export const validateToken = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
-    credentials: "include", //saves the token in the browser with userId
+    credentials: "include",
   });
 
   if (!response.ok) {
     throw new Error("Token invalid");
   }
 
-  return response.json(); //token is confirmed to be vallid
+  return response.json();
 };
 
-//signout will be called when this path is hit
 export const signOut = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
     credentials: "include",
@@ -112,7 +108,7 @@ export const fetchMyHotelById = async (hotelId: string): Promise<HotelType> => {
   });
 
   if (!response.ok) {
-    throw new Error("Error fetching Hotel");
+    throw new Error("Error fetching Hotels");
   }
 
   return response.json();
@@ -149,7 +145,6 @@ export type SearchParams = {
   sortOption?: string;
 };
 
-//searching hotels with respect to search parameters input
 export const searchHotels = async (
   searchParams: SearchParams
 ): Promise<HotelSearchResponse> => {
@@ -203,23 +198,31 @@ export const createPaymentIntent = async (
   hotelId: string,
   numberOfNights: string
 ): Promise<PaymentIntentResponse> => {
-  const response = await fetch(
-    `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
-    {
-      credentials: "include",
-      method: "POST",
-      body: JSON.stringify({ numberOfNights }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+  console.log("createPaymentIntent called with", hotelId, numberOfNights);
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
+      {
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify({ numberOfNights }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  );
 
-  if (!response.ok) {
-    throw new Error("Error fetching payment intent");
+    const data = await response.json();
+    console.log("PaymentIntentResponse data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error creating payment intent:", error);
+    throw error;
   }
-
-  return response.json();
 };
 
 export const createRoomBooking = async (formData: BookingFormData) => {

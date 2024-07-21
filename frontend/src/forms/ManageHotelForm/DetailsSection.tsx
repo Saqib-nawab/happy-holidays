@@ -4,7 +4,7 @@ import { HotelFormData } from "./ManageHotelForm";
 const DetailsSection = () => {
   const {
     register,
-    formState: { errors }, //destructuring errors from the form
+    formState: { errors },
   } = useFormContext<HotelFormData>();
 
   return (
@@ -78,12 +78,10 @@ const DetailsSection = () => {
           className="border rounded w-full p-2 text-gray-700 font-normal"
         >
           <option value="" className="text-sm font-bold">
-            Select a Rating
+            Select as Rating
           </option>
           {[1, 2, 3, 4, 5].map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
+            <option value={num}>{num}</option>
           ))}
         </select>
         {errors.starRating && (

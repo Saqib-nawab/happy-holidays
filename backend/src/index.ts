@@ -2,16 +2,14 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
-import path from "path";
-import { v2 as cloudinary } from "cloudinary";
-
-// routes
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
+import cookieParser from "cookie-parser";
+import path from "path";
+import { v2 as cloudinary } from "cloudinary";
 import myHotelRoutes from "./routes/my-hotels";
 import hotelRoutes from "./routes/hotels";
-
-import cookieParser from "cookie-parser";
+import bookingRoutes from "./routes/my-bookings";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -22,25 +20,28 @@ cloudinary.config({
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
-app.use(cookieParser()); // to parse cookies from request
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
-app.use(express.static(path.join(__dirname, "../../frontend/dist"))); //so that we can deploy the enitre application all at once instead of seperate backend and frontend
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Specify your frontend origin here form where request could be accepted (authorisation etc.)
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
-
-app.use(cors(corsOptions));
-
-app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/my-hotels", myHotelRoutes); //for the current logged in user to manage their own hotels
-app.use("/api/hotels", hotelRoutes); //endpoint for searching hotels
+app.use("/api/users", userRoutes);
+app.use("/api/my-hotels", myHotelRoutes);
+app.use("/api/hotels", hotelRoutes);
+app.use("/api/my-bookings", bookingRoutes);
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
 
 app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+  console.log("server running on localhost:3000");
 });

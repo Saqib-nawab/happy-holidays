@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
-import { useAppContext } from "../contexts/AppContexts";
+import { useAppContext } from "../contexts/AppContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export type SignInFormData = {
@@ -22,8 +22,6 @@ const SignIn = () => {
     handleSubmit,
   } = useForm<SignInFormData>();
 
-
-  //mutation will either be a success or an Error
   const mutation = useMutation(apiClient.signIn, {
     onSuccess: async () => {
       showToast({ message: "Sign in Successful!", type: "SUCCESS" });

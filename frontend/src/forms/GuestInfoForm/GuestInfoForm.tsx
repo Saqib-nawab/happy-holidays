@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import { useSearchContext } from "../../contexts/SearchContext";
-import { useAppContext } from "../../contexts/AppContexts";
+import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 type Props = {

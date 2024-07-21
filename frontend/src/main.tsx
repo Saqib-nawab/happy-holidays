@@ -1,13 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { AppContextProvider } from "./contexts/AppContexts.tsx";
+import { AppContextProvider } from "./contexts/AppContext.tsx";
 import { SearchContextProvider } from "./contexts/SearchContext.tsx";
-import App from './App.tsx'
-import './index.css'
 
-
-//this will be provided to the entire application
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -15,16 +13,14 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-         <AppContextProvider>
-          <SearchContextProvider>
+      <AppContextProvider>
+        <SearchContextProvider>
           <App />
         </SearchContextProvider>
       </AppContextProvider>
     </QueryClientProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
